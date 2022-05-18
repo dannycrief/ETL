@@ -222,7 +222,9 @@ def parse_pojazdy():
 def parse_zip_pojazdy():
     link = 'https://api.cepik.gov.pl/pliki?limit=100&page=1'
     req = requests.get(link, verify=False)
+    print(f"NOTE: {req}")
     for i in req.json()['data']:
+        print(f"NOTE: Downloading {i['attributes']['url-do-pliku']}")
         r = requests.get(i['attributes']['url-do-pliku'], verify=False, stream=True)
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall("ZIPs")
